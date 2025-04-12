@@ -64,10 +64,10 @@
             background-color: #fff;
             border: 1px solid #ccc;
             border-radius: 5px;
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             margin: 5px;
-            font-size: 30px;
+            font-size: 20px;
             font-weight: bold;
             text-align: center;
             cursor: pointer;
@@ -77,7 +77,7 @@
 
         /* 幅の広いキーのスタイル */
         .key.wide {
-            width: 75px;
+            width: 60px;
         }
 
         /* 特殊キーのスタイル */
@@ -131,14 +131,14 @@
             }
 
             .key {
-                width: 32px;
-                height: 32px;
-                font-size: 20px;
+                width: 22px;
+                height: 22px;
+                font-size: 12px;
                 margin: 2px;
             }
 
             .key.wide {
-                width: 40px;
+                width: 30px;
             }
 
             .display-frame {
@@ -207,6 +207,7 @@
         <!-- 4行目 -->
         <div class="row">
             <div class="key special-key wide" role="button" tabindex="0" aria-label="Space">Space</div>
+            <div class="key exceptional-key wide" role="button" tabindex="0" aria-label="BS">BS</div>
             <div class="key exceptional-key wide" role="button" tabindex="0" aria-label="Clear">Clear</div>
             <div id="prev" class="key exceptional-key wide " role="button" tabindex="0" aria-label="Back">Back</div>
             <div id="next" class="key exceptional-key wide" role="button" tabindex="0" aria-label="Next">Next</div>
@@ -9780,7 +9781,6 @@
                     "e8/audio/hand+out.mp3"
                 ]
             ];
-
             let e_s_deci = JSON.parse(localStorage.getItem("e_s_deci")) || new Array(s_words.length).fill(false);
             let currentIndex = 1;
             let chktest = false;
@@ -9822,6 +9822,9 @@
                         e_s_deci[currentIndex] = true;
                         localStorage.setItem("e_s_deci", JSON.stringify(e_s_deci)); // ローカルストレージを更新
                         saveDeci();
+                        setTimeout(() => {
+                            next();
+                        }, 2000);
                     } else {
                         document.getElementById("short").innerHTML = `<br>${showshortcut ? "【不正解】" : ""}${showshortcut ? s_words[index][2] : ""}`;
                         typedKeys = "";
@@ -9829,9 +9832,7 @@
                 }
             };
 
-
-            document.getElementById("next").addEventListener("click", function (event) {
-                event.stopImmediatePropagation();
+            function next() {
                 if (chktest) {
                     do {
                         if (currentIndex < s_words.length - 1) currentIndex++;
@@ -9842,6 +9843,11 @@
                 }
                 showshortcut = false;
                 displayData(currentIndex);
+            }
+
+            document.getElementById("next").addEventListener("click", function (event) {
+                event.stopImmediatePropagation();
+                next();
             });
 
             document.getElementById("prev").addEventListener("click", function (event) {
@@ -9931,6 +9937,11 @@
                     document.getElementById("short").innerHTML = `<br>${typedKeys}`;
                 } else if (keyText === "Space") {
                     typedKeys += " ";
+                } else if (keyText === "BS") {
+                    if (typedKeys.length > 0) {
+                        typedKeys = typedKeys.slice(0, -1);
+                        document.getElementById("short").innerHTML = `<br>${typedKeys}`;
+                    }
                 } else {
                     // それ以外のキーは蓄積
                     typedKeys += keyText;
