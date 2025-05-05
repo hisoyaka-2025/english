@@ -11175,7 +11175,7 @@
             }
 
             function displayData(index) {
-                if (index < 1 || index >= s_words.length) return;
+                if (index < 1 || index >= s_words.length) return;//index が範囲外なら処理をやめる。
                 document.getElementById("wordIndex").value = index;
                 document.getElementById("starttest").textContent = chktest ? "始" : "止";
                 document.getElementById("startmode").textContent = chkmode ? "始" : "止";
@@ -11237,13 +11237,13 @@
                                 next();
                             }, 2000);
                         } else {
-                            document.getElementById("short").innerHTML = `<br>${showshortcut ? "【不正解】" : ""}${showshortcut ? s_words[index][2] : ""}`;
+                            document.getElementById("short").innerHTML = showshortcut ? `<br>【不正解】×${targetText}:〇${s_words[index][2]}` : "";
                             typedKeys = "";
                             if (chkgame) gamecount++;
                             if (chkgame) {
                                 setTimeout(() => {
                                     next();
-                                }, 2000);
+                                }, 3000);
                             }
                         }
                     }
