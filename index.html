@@ -11237,13 +11237,13 @@
                                 next();
                             }, 2000);
                         } else {
-                            document.getElementById("short").innerHTML = showshortcut ? `<br>【不正解】×${targetText}:〇${s_words[index][2]}` : "";
+                            document.getElementById("short").innerHTML = showshortcut ? `<br>【不正解】×${targetText}　〇${s_words[index][2]}` : "";
                             typedKeys = "";
                             if (chkgame) gamecount++;
                             if (chkgame) {
                                 setTimeout(() => {
                                     next();
-                                }, 3000);
+                                }, 2500);
                             }
                         }
                     }
